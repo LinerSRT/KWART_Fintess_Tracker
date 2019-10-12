@@ -13,6 +13,13 @@
     </style>
 
 
+    <style name="ButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/background_shape</item>
+        <item name="android:backgroundTint">?colorPrimary</item>
+        <item name="android:padding">10dp</item>
+    </style>
 
     <style name="OrangeDeepTheme" parent="@android:style/Theme.NoTitleBar" >
         <item name="android:windowFullscreen">true</item>

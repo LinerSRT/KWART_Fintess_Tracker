@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_shape"
+    android:backgroundTint="?backgroundColor">
+
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="null"
+        android:gravity="center"
+        android:background="@drawable/background_shape_up"
+        android:backgroundTint="?colorPrimary"
+        android:padding="10dp"
+        android:textSize="22sp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:elevation="5dp"
+        />
+
+    <TextView
+        android:id="@+id/dialogText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="null"
+        android:textSize="18sp"
+        android:layout_margin="10dp"
+        android:textColor="?textColor"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp">
+
+        <Button
+            android:id="@+id/dialogCancelBtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="null"
+            android:layout_marginEnd="10dp"
+            style="@style/ButtonStyle"/>
+
+        <Button
+            android:id="@+id/dialogOkBtn"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="null"
+            style="@style/ButtonStyle"/>
+
+    </LinearLayout>
+
+</LinearLayout>

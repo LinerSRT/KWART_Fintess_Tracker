@@ -4,18 +4,12 @@ import android.Manifest;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.kwart.tracking.R;
@@ -38,11 +32,7 @@ public class MainActivity extends FragmentActivity {
     private ImageButton trainBtn;
     private ImageButton settingsBtn;
     private TextView viewpagerDescription;
-
     private Drawable coloredBG, grayBG;
-
-    //private GPSManager gpsManager;
-
     private String[] pagesDescriptions = new String[]{
             "Статистика",
             "История",
@@ -80,9 +70,9 @@ public class MainActivity extends FragmentActivity {
         trainBtn = findViewById(R.id.trainBtn);
         settingsBtn = findViewById(R.id.settingsBtn);
         viewpagerDescription = findViewById(R.id.viewpager_description);
-        coloredBG = getResources().getDrawable(R.drawable.button_background_shape);
+        coloredBG = getResources().getDrawable(R.drawable.background_shape);
         coloredBG.setTint(ColorUtil.getAttrColor(MainActivity.this,R.attr.colorPrimary));
-        grayBG = getResources().getDrawable(R.drawable.button_background_shape);
+        grayBG = getResources().getDrawable(R.drawable.background_shape);
         grayBG.setTint(Color.parseColor("#777777"));
         setUpViewPager();
         statBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,20 +99,7 @@ public class MainActivity extends FragmentActivity {
                 viewPager.setCurrentItem(3);
             }
         });
-
-
-
-
-
-
     }
-
-   //@Override
-   //public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-   //    if(gpsManager != null){
-   //        gpsManager.onRequestPermissionResult(requestCode, permissions, grantResults);
-   //    }
-   //}
 
     @Override
     public void onBackPressed() {

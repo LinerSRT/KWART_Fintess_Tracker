@@ -12,10 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.kwart.tracking.R;
-import com.kwart.tracking.activity.MainActivity;
-import com.kwart.tracking.activity.WorkoutActivity;
-import com.kwart.tracking.utils.ColorUtil;
-import com.kwart.tracking.utils.Constants;
 import com.kwart.tracking.utils.workout.WorkoutManager;
 
 import java.util.Objects;
@@ -35,9 +31,9 @@ public class WorkoutStopFragment extends Fragment {
         pauseBtn = view.findViewById(R.id.pause_resume_workout);
         stopBtn = view.findViewById(R.id.stop_workout);
 
-        greenBG = getResources().getDrawable(R.drawable.button_background_shape);
+        greenBG = getResources().getDrawable(R.drawable.background_shape);
         greenBG.setTint(Color.parseColor("#FF0000"));
-        redBG = getResources().getDrawable(R.drawable.button_background_shape);
+        redBG = getResources().getDrawable(R.drawable.background_shape);
         redBG.setTint(Color.parseColor("#0000FF"));
         workoutManager = WorkoutInformationFragment.getWorkoutManager();
 
@@ -56,13 +52,13 @@ public class WorkoutStopFragment extends Fragment {
             public void onClick(View view) {
                 if(workoutManager != null){
                     if(!isWorkoutPaused) {
-                        workoutManager.pauseSensorRecognition();
+                        workoutManager.pauseManager();
                         isWorkoutPaused = true;
                         Drawable img = Objects.requireNonNull(getContext()).getResources().getDrawable( R.drawable.resume_icon );
                         pauseBtn.setText("Продолжить");
                         pauseBtn.setCompoundDrawablesWithIntrinsicBounds( img, null, null, null);
                     } else {
-                        workoutManager.resumeSensorRecognition();
+                        workoutManager.resumeManager();
                         isWorkoutPaused = false;
                         Drawable img = Objects.requireNonNull(getContext()).getResources().getDrawable( R.drawable.pause_icon );
                         pauseBtn.setText("Пауза");
@@ -76,7 +72,7 @@ public class WorkoutStopFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(workoutManager != null){
-                    workoutManager.stopSensorRecognition();
+                    workoutManager.stopManager();
                     Objects.requireNonNull(getActivity()).finish();
                 }
             }

@@ -18,11 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.kwart.tracking.R;
-import com.kwart.tracking.location.GPSInterface;
-import com.kwart.tracking.location.GPSManager;
 import com.kwart.tracking.utils.Constants;
 import com.kwart.tracking.utils.PreferenceManager;
 import com.kwart.tracking.utils.workout.WorkoutItem;
@@ -31,13 +28,9 @@ import com.kwart.tracking.utils.workout.WorkoutManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 
 public class WorkoutInformationFragment extends Fragment {
@@ -50,7 +43,6 @@ public class WorkoutInformationFragment extends Fragment {
     private boolean elapsedViewVisible = true;
     private Handler mHandler = new Handler();
     private Timer mTimer = null;
-
 
 
     @Nullable
@@ -111,8 +103,44 @@ public class WorkoutInformationFragment extends Fragment {
                     elapsedTimeView.setVisibility(View.VISIBLE);
                     elapsedViewVisible = true;
             }
+
+            @Override
+            public void permissionAccessState(boolean isGranted) {
+
+            }
+
+            @Override
+            public void onAccuracyChanged(float accuracy) {
+
+            }
+
+            @Override
+            public void onLatLonChanged(double lat, double lon) {
+
+            }
+
+            @Override
+            public void onAltitudeChanged(double altitude) {
+
+            }
+
+            @Override
+            public void avilableSatelites(int count) {
+
+            }
+
+            @Override
+            public void onSpeedChanged(float speed) {
+
+            }
+
+            @Override
+            public void debug(String data) {
+
+            }
         });
-        workoutManager.startSensorRecognition(Objects.requireNonNull(getActivity()).getIntent().getIntExtra("mode", 0));
+        workoutManager.setGPSUsing(preferenceManager.getBoolean(Constants.SETTINGS_USE_GPS_KEY, false), LocationManager.GPS_PROVIDER);
+        workoutManager.startManager(Objects.requireNonNull(getActivity()).getIntent().getIntExtra("mode", 0));
         return view;
     }
 

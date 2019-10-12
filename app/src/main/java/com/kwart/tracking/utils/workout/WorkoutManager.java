@@ -1,5 +1,6 @@
 package com.kwart.tracking.utils.workout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -33,19 +34,32 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
 
     private Handler mainThread = new Handler();
     private Runnable runnableThread;
-    boolean stopMainThread = false;
 
+    //GPS part
+    private boolean gpsManagerEnabled = false;
+    private int GPS_UPDATE_TIMEOUT = 1000; //ms
+    private int GPS_UPDATE_DISTANCE = 3; // per 3 meter
+    private String GPS_PROVIDER = LocationManager.GPS_PROVIDER;
+    private boolean isGPSRecognitionRunning = false;
 
-    private boolean SR_havePedometerSensor;
-    private boolean SR_isRunning = false;
-    private boolean SR_isPaused = false;
-    private int SR_stepCount, SR_avgHeartRate, SR_minHeartRate, SR_maxHeartRate, SR_stepPerSec;
-    private float distance, calories;
+    //Manager part
+    private boolean isManagerRunning = false;
+    private boolean isManagerIsPaused = false;
+    private boolean isMainThreadStopped = false;
 
-    private List<Float> speedList;
+    //Sensor part
+    private boolean havePerometer = false;
+    private boolean isSensorRecognitionRunning = false;
+    private boolean isSensorRecognitionPaused = false;
 
-    private List<Integer> SR_pulseList;
+    private List<Integer> pulseArray;
+    private int pulseAVG, pulseMin, pulseMax;
 
+    private float reachedDistance, burnedCalories;
+    private List<Float> speedArray;
+    private int stepPerSec, stepCount;
+
+    //User part
     private float userStepSize;
     private int userWeight;
 
@@ -54,28 +68,27 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
         this.context = context;
         userStepSize = WorkOutHelper.getUserStepSize(context);
         userWeight = WorkOutHelper.getUserWeight(context);
-        SR_havePedometerSensor = SensorUtil.hasPedometerSensor(context);
+        havePerometer = SensorUtil.hasPedometerSensor(context);
         workoutItem = new WorkoutItem();
         runnableThread = new Runnable() {
             @Override
             public void run() {
-                workoutItem.setStepPerSec(SR_stepPerSec);
-                float maxSpeed = calculateSpeedBySensor(SR_stepPerSec);
+                workoutItem.setStepPerSec(stepPerSec);
+                float maxSpeed = calculateSpeedBySensor(stepPerSec);
                 if(workoutItem.getMaxSpeed() < maxSpeed){
                     workoutItem.setMaxSpeed(maxSpeed);
                 }
-                SR_stepPerSec = 0;
+                stepPerSec = 0;
                 notifyListener();
-                if (!stopMainThread) {
+                if (!isMainThreadStopped) {
                     mainThread.postDelayed(this, 1000);
                 }
             }
         };
-
         this.workoutListener = workoutListener;
         this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         this.locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if(SR_havePedometerSensor){
+        if(havePerometer){
             stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         } else {
             stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -84,53 +97,120 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
     }
 
 
-    public void startSensorRecognition(int workoutType){
-        if (!SR_isRunning && !SR_isPaused) {
+    public void setGPSUsing(boolean enabled, String GPS_PROVIDER){
+        this.gpsManagerEnabled = enabled;
+        this.GPS_PROVIDER = GPS_PROVIDER;
+    }
+
+    @SuppressLint("MissingPermission")
+    public void startManager(int workoutType){
+        if(!isManagerRunning && !isManagerIsPaused) {
+            if (gpsManagerEnabled && !isGPSRecognitionRunning) {
+                locationManager.requestLocationUpdates(GPS_PROVIDER, GPS_UPDATE_TIMEOUT, GPS_UPDATE_DISTANCE, this);
+                isGPSRecognitionRunning = true;
+            } else if (gpsManagerEnabled){
+                locationManager.removeUpdates(this);
+                locationManager.requestLocationUpdates(GPS_PROVIDER, GPS_UPDATE_TIMEOUT, GPS_UPDATE_DISTANCE, this);
+                isGPSRecognitionRunning = true;
+            }
+
+            if (!isSensorRecognitionRunning && !isSensorRecognitionPaused) {
+                workoutItem.setWorkoutType(workoutType);
+                sensorManager.registerListener(this, heartRateSensor, SensorManager.SENSOR_DELAY_FASTEST);
+                sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
+                pulseArray = new ArrayList<>();
+                speedArray = new ArrayList<>();
+                pulseAVG = 0;
+                pulseMin = 0;
+                pulseMax = 0;
+                stepCount = -1;
+                stepPerSec = -1;
+                isManagerRunning = true;
+                isManagerIsPaused = false;
+                isMainThreadStopped = false;
+                isSensorRecognitionRunning = true;
+                isSensorRecognitionPaused = false;
+                mainThread.post(runnableThread);
+                workoutListener.onStart();
+            }
+        }
+        Log.d(Constants.APP_TAG, "Starting manager... IsRunning: "+isManagerRunning+", IsPaused: "+isManagerIsPaused+"\n" +
+                "GPS Manager enabled: "+gpsManagerEnabled+"\n" +
+                "GPS Recognition running: "+isGPSRecognitionRunning+"\n" +
+                "Sensor recognition running: "+isSensorRecognitionRunning+"\n" +
+                "Sensor recognition paused: "+isSensorRecognitionPaused);
+    }
+
+    public void stopManager(){
+        if(gpsManagerEnabled){
+            if(isGPSRecognitionRunning){
+                locationManager.removeUpdates(this);
+                isGPSRecognitionRunning = false;
+            }
+        }
+        if(isSensorRecognitionRunning){
+            sensorManager.unregisterListener(this, stepSensor);
+            sensorManager.unregisterListener(this, heartRateSensor);
+        }
+        isMainThreadStopped = true;
+        isManagerRunning = false;
+        isSensorRecognitionRunning = false;
+        isGPSRecognitionRunning = false;
+        isSensorRecognitionPaused = false;
+        Log.d(Constants.APP_TAG, "Stopping manager... IsRunning: "+isManagerRunning+", IsPaused: "+isManagerIsPaused+"\n" +
+                "GPS Manager enabled: "+gpsManagerEnabled+"\n" +
+                "GPS Recognition running: "+isGPSRecognitionRunning+"\n" +
+                "Sensor recognition running: "+isSensorRecognitionRunning+"\n" +
+                "Sensor recognition paused: "+isSensorRecognitionPaused);
+        workoutListener.onStop();
+
+    }
+
+    public void pauseManager(){
+        if(gpsManagerEnabled) {
+            if (isGPSRecognitionRunning) {
+                locationManager.removeUpdates(this);
+                isGPSRecognitionRunning = false;
+            }
+        }
+        if(isSensorRecognitionRunning && !isSensorRecognitionPaused){
+            isSensorRecognitionPaused = true;
+            sensorManager.unregisterListener(this);
+            isMainThreadStopped = true;
+            workoutListener.onPause();
+        }
+        isManagerIsPaused = true;
+        Log.d(Constants.APP_TAG, "Pause manager... IsRunning: "+isManagerRunning+", IsPaused: "+isManagerIsPaused+"\n" +
+                "GPS Manager enabled: "+gpsManagerEnabled+"\n" +
+                "GPS Recognition running: "+isGPSRecognitionRunning+"\n" +
+                "Sensor recognition running: "+isSensorRecognitionRunning+"\n" +
+                "Sensor recognition paused: "+isSensorRecognitionPaused);
+
+
+    }
+
+    @SuppressLint("MissingPermission")
+    public void resumeManager(){
+        if(gpsManagerEnabled){
+            if(!isGPSRecognitionRunning) {
+                locationManager.requestLocationUpdates(GPS_PROVIDER, GPS_UPDATE_TIMEOUT, GPS_UPDATE_DISTANCE, this);
+                isGPSRecognitionRunning = true;
+            }
+        }
+        if(isSensorRecognitionPaused){
+            isSensorRecognitionPaused = false;
             sensorManager.registerListener(this, heartRateSensor, SensorManager.SENSOR_DELAY_FASTEST);
             sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_NORMAL);
-            SR_pulseList = new ArrayList<>();
-            speedList = new ArrayList<>();
-            SR_isRunning = true;
-            SR_isPaused = false;
-            SR_avgHeartRate = 0;
-            SR_minHeartRate = 0;
-            SR_maxHeartRate = 0;
-            SR_stepCount = -1;
-            SR_stepPerSec = -1;
-            workoutItem.setWorkoutType(workoutType);
-            stopMainThread = false;
-            mainThread.post(runnableThread);
-            workoutListener.onStart();
-        }
-    }
-
-    public void stopSensorRecognition(){
-        if(SR_isRunning) {
-            sensorManager.unregisterListener(this);
-            stopMainThread = true;
-            workoutListener.onStop();
-        }
-    }
-
-    public void pauseSensorRecognition(){
-        if(SR_isRunning) {
-            SR_isPaused = true;
-            sensorManager.unregisterListener(this, heartRateSensor);
-            workoutListener.onPause();
-            stopMainThread = true;
-        }
-    }
-
-    public void resumeSensorRecognition(){
-        if(SR_isRunning) {
-            SR_isPaused = false;
-            sensorManager.registerListener(this, heartRateSensor, SensorManager.SENSOR_DELAY_FASTEST);
-            workoutListener.onResume();
-            stopMainThread = false;
+            isMainThreadStopped = false;
             mainThread.post(runnableThread);
         }
+        isManagerIsPaused = false;
+        Log.d(Constants.APP_TAG, "Resume manager... IsRunning: "+isManagerRunning+", IsPaused: "+isManagerIsPaused+"\n" +
+                "GPS Manager enabled: "+gpsManagerEnabled+"\n" +
+                "GPS Recognition running: "+isGPSRecognitionRunning+"\n" +
+                "Sensor recognition running: "+isSensorRecognitionRunning+"\n" +
+                "Sensor recognition paused: "+isSensorRecognitionPaused);
     }
-
 
 
 
@@ -142,55 +222,55 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
                 if(SensorManager.SENSOR_STATUS_NO_CONTACT != sensorEvent.accuracy) {
                     int sensorValue = (int) sensorEvent.values[0];
                     if (sensorValue != 0) {
-                        if (SR_minHeartRate == 0) {
-                            SR_minHeartRate = sensorValue;
-                        } else if (sensorValue < SR_minHeartRate) {
-                            SR_minHeartRate = sensorValue;
+                        if (pulseMin == 0) {
+                            pulseMin = sensorValue;
+                        } else if (sensorValue < pulseMin) {
+                            pulseMin = sensorValue;
                         }
-                        if (SR_maxHeartRate == 0) {
-                            SR_maxHeartRate = sensorValue;
-                        } else if (sensorValue > SR_maxHeartRate) {
-                            SR_maxHeartRate = sensorValue;
+                        if (pulseMax == 0) {
+                            pulseMax = sensorValue;
+                        } else if (sensorValue > pulseMax) {
+                            pulseMax = sensorValue;
                         }
-                        SR_pulseList.add(sensorValue);
-                        if (SR_pulseList.size() > 2) {
+                        pulseArray.add(sensorValue);
+                        if (pulseArray.size() > 2) {
                             int average = 0;
-                            for (int av_pulse : SR_pulseList) {
+                            for (int av_pulse : pulseArray) {
                                 average += av_pulse;
-                                SR_avgHeartRate = average / SR_pulseList.size();
+                                pulseAVG = average / pulseArray.size();
                             }
                         }
-                        workoutItem.setAvgPulse(SR_avgHeartRate);
-                        workoutItem.setMaxPulse(SR_maxHeartRate);
-                        workoutItem.setMinPulse(SR_minHeartRate);
+                        workoutItem.setAvgPulse(pulseAVG);
+                        workoutItem.setMaxPulse(pulseMax);
+                        workoutItem.setMinPulse(pulseMin);
                     }
                 }
             }
         if(sensorEvent.sensor == stepSensor){
-            SR_stepCount++;
-            SR_stepPerSec++;
-            workoutItem.setStepCount(SR_stepCount);
-            calculateCalories(SR_stepCount);
-            calculateDistanceBySensor(SR_stepCount);
+            stepCount++;
+            stepPerSec++;
+            workoutItem.setStepCount(stepCount);
+            calculateCalories(stepCount);
+            calculateDistanceBySensor(stepCount);
         }
     }
 
     private void calculateDistanceBySensor(int stepCount){
-        distance = (((float)stepCount * userStepSize))/1000; //im meter
-        workoutItem.setDistance(roundFloat(distance, 2));
+        reachedDistance = (((float)stepCount * userStepSize))/1000; //im meter
+        workoutItem.setDistance(roundFloat(reachedDistance, 2));
     }
 
     private void calculateDistanceByGPS(){
-        distance = 0;
-        workoutItem.setDistance(distance);
+        reachedDistance = 0;
+        workoutItem.setDistance(reachedDistance);
     }
 
     private float calculateSpeedBySensor(int stepPerSecond){
         float kmH = roundFloat((userStepSize*stepPerSecond)*3.6f, 2);
-        speedList.add(kmH);
+        speedArray.add(kmH);
         int itemsCount = 0;
         float tmpSpeed = 0;
-        for(float item:speedList){
+        for(float item:speedArray){
             itemsCount++;
             tmpSpeed = tmpSpeed+item;
         }
@@ -199,27 +279,11 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
         return kmH;
     }
 
-    private void calculateCalories(int stepCount){
-        calories = (float)((stepCount*userStepSize)*0.5*userWeight)/1000;
-        workoutItem.setCalories(roundFloat(calories, 1));
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(!SR_isPaused)
+        if(!isSensorRecognitionPaused)
             processSensorData(sensorEvent);
     }
 
@@ -230,7 +294,19 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
+        workoutListener.avilableSatelites(location.getExtras().getInt("satellites"));
+        workoutListener.onAccuracyChanged(location.getAccuracy());
+        workoutListener.onAltitudeChanged(location.getAltitude());
+        workoutListener.onLatLonChanged(location.getLatitude(), location.getLatitude());
+        workoutListener.onSpeedChanged(location.getSpeed());
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("GPSDATA:\n");
+        stringBuilder.append("Accuracy: "+location.getAccuracy()+"\n");
+        stringBuilder.append("Altitude: "+location.getAltitude()+"\n");
+        stringBuilder.append("LAT-LON: "+location.getLatitude()+"|"+location.getLongitude()+"\n");
+        stringBuilder.append("Speed: "+location.getSpeed()+"\n");
+        stringBuilder.append("Sats: "+location.getExtras().getInt("satellites")+"\n");
+        workoutListener.debug(stringBuilder.toString());
     }
 
     @Override
@@ -250,6 +326,11 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
 
     private void notifyListener(){
         workoutListener.dataChanged(workoutItem);
+    }
+
+    private void calculateCalories(int stepCount){
+        burnedCalories = (float)((stepCount*userStepSize)*0.5*userWeight)/1000;
+        workoutItem.setCalories(roundFloat(burnedCalories, 1));
     }
 
     private float roundFloat(double value, int decimalPlaces){
