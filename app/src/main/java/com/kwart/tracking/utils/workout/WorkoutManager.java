@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.kwart.tracking.sensor.SensorUtil;
 import com.kwart.tracking.utils.Constants;
+import com.kwart.tracking.utils.PreferenceManager;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class WorkoutManager implements LocationListener, SensorEventListener {
+    private PreferenceManager preferenceManager;
     private Context context;
     private SensorManager sensorManager;
     private LocationManager locationManager;
@@ -66,6 +68,7 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
 
     public WorkoutManager(Context context, final WorkoutListener workoutListener){
         this.context = context;
+        preferenceManager = PreferenceManager.getInstance(context);
         userStepSize = WorkOutHelper.getUserStepSize(context);
         userWeight = WorkOutHelper.getUserWeight(context);
         havePerometer = SensorUtil.hasPedometerSensor(context);
@@ -131,6 +134,7 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
                 isSensorRecognitionRunning = true;
                 isSensorRecognitionPaused = false;
                 mainThread.post(runnableThread);
+                preferenceManager.saveBoolean(Constants.IS_WORKOUT_RUNNING_KEY, true);
                 workoutListener.onStart();
             }
         }
@@ -162,6 +166,8 @@ public class WorkoutManager implements LocationListener, SensorEventListener {
                 "GPS Recognition running: "+isGPSRecognitionRunning+"\n" +
                 "Sensor recognition running: "+isSensorRecognitionRunning+"\n" +
                 "Sensor recognition paused: "+isSensorRecognitionPaused);
+
+        preferenceManager.saveBoolean(Constants.IS_WORKOUT_RUNNING_KEY, false);
         workoutListener.onStop();
 
     }

@@ -20,7 +20,6 @@ public class WorkoutActivity extends FragmentActivity {
     private ViewPager viewPager;
     private DialogView dialogView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +27,6 @@ public class WorkoutActivity extends FragmentActivity {
         themeManager.initTheme(this);
         setContentView(R.layout.workout_composite_fragment);
         preferenceManager = PreferenceManager.getInstance(this);
-
         setupPager();
     }
 

@@ -34,4 +34,12 @@ public class WorkoutMapFragment extends Fragment {
         workoutMapManager.initMapManager(map);
         return view;
     }
+
+    public WorkoutMapManager getWorkoutMapManager(){
+        if(workoutMapManager != null) {
+            return workoutMapManager;
+        } else {
+            return null;
+        }
+    }
 }

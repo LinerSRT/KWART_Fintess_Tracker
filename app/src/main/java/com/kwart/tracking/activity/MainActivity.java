@@ -2,6 +2,7 @@ package com.kwart.tracking.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,7 +19,9 @@ import com.kwart.tracking.fragments.SettingsFragment;
 import com.kwart.tracking.fragments.StatisticFragment;
 import com.kwart.tracking.fragments.TrainFragment;
 import com.kwart.tracking.utils.ColorUtil;
+import com.kwart.tracking.utils.Constants;
 import com.kwart.tracking.utils.FragmentPageAdapter;
+import com.kwart.tracking.utils.PreferenceManager;
 import com.kwart.tracking.utils.ThemeManager;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
@@ -26,6 +29,7 @@ import com.nabinbhandari.android.permissions.Permissions;
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity {
+    private PreferenceManager preferenceManager;
     private ViewPager viewPager;
     private ImageButton statBtn;
     private ImageButton historyBtn;
@@ -47,6 +51,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         ThemeManager themeManager = new ThemeManager(this);
         themeManager.initTheme(this);
+        preferenceManager = PreferenceManager.getInstance(this);
         setContentView(R.layout.activity_main);
         String[] permissions = new String[]{Manifest.permission.BODY_SENSORS, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
@@ -171,6 +176,16 @@ public class MainActivity extends FragmentActivity {
                 settingsBtn.setBackground(coloredBG);
                 viewpagerDescription.setText(pagesDescriptions[3]);
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(preferenceManager.getBoolean(Constants.IS_WORKOUT_RUNNING_KEY, false)){
+           Intent i = new Intent(this, WorkoutActivity.class);
+           i.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+           startActivity(i);
         }
     }
 }

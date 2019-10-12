@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/BlueDeepTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.WorkoutActivity" />
+        <activity android:name=".activity.WorkoutActivity"
+            android:launchMode="singleTask"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

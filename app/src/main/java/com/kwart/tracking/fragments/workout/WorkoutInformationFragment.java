@@ -25,6 +25,7 @@ import com.kwart.tracking.utils.PreferenceManager;
 import com.kwart.tracking.utils.workout.WorkoutItem;
 import com.kwart.tracking.utils.workout.WorkoutListener;
 import com.kwart.tracking.utils.workout.WorkoutManager;
+import com.kwart.tracking.utils.workout.WorkoutMapManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,8 +35,11 @@ import java.util.TimerTask;
 
 
 public class WorkoutInformationFragment extends Fragment {
+
+
     private PreferenceManager preferenceManager;
     public static WorkoutManager workoutManager;
+    private WorkoutMapManager workoutMapManager;
 
     private TextView currentTimeView, maxSpeedView, distanceView, avgSpeedView, caloriesView, heartrateView, stepsView;
     private Chronometer elapsedTimeView;
@@ -62,6 +66,7 @@ public class WorkoutInformationFragment extends Fragment {
         String currentDateandTime = time_format.format(new Date());
         currentTimeView.setText(currentDateandTime);
         getContext().registerReceiver(timeChangedReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
+        workoutMapManager = WorkoutMapFragment.workoutMapManager;
         workoutManager = new WorkoutManager(getContext(), new WorkoutListener() {
             @Override
             public void dataChanged(WorkoutItem workoutItem) {
@@ -71,7 +76,6 @@ public class WorkoutInformationFragment extends Fragment {
                 stepsView.setText(String.valueOf(workoutItem.getStepCount()));
                 avgSpeedView.setText(String.valueOf(workoutItem.getAvgSpeed()));
                 maxSpeedView.setText(String.valueOf(workoutItem.getMaxSpeed()));
-                //Log.d(Constants.APP_TAG, workoutItem.toString());
             }
 
             @Override
@@ -116,7 +120,7 @@ public class WorkoutInformationFragment extends Fragment {
 
             @Override
             public void onLatLonChanged(double lat, double lon) {
-
+                    workoutMapManager.moveCamera(lat, lon, 10);
             }
 
             @Override
@@ -136,7 +140,7 @@ public class WorkoutInformationFragment extends Fragment {
 
             @Override
             public void debug(String data) {
-
+                Log.d(Constants.APP_TAG, data);
             }
         });
         workoutManager.setGPSUsing(preferenceManager.getBoolean(Constants.SETTINGS_USE_GPS_KEY, false), LocationManager.GPS_PROVIDER);

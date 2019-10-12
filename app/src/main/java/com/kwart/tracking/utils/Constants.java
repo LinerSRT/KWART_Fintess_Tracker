@@ -15,6 +15,8 @@ public class Constants {
 
 
 
+    public static final String IS_WORKOUT_RUNNING_KEY = "workout_running";
+
 
     public static final String APP_TAG = "KWART_APP";
 }
