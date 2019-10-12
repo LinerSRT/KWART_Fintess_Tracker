@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="?backgroundColor"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:gravity="left|center_vertical">
+
+
+        <CheckBox
+            android:id="@+id/settings_use_gps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
+            android:checked="true"
+            android:buttonTint="?attr/colorPrimary"
+            android:drawableRight="@drawable/gps_icon"
+            android:drawablePadding="10dp"
+            android:drawableTint="?colorPrimary"
+            android:text="Использовать GPS"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/settings_show_realtime_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
+            android:checked="false"
+            android:buttonTint="?attr/colorPrimary"
+            android:drawableRight="@drawable/map_icon"
+            android:drawablePadding="10dp"
+            android:drawableTint="?colorPrimary"
+            android:text="Показывать карту \nв реальном времени"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/settings_autosave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
+            android:checked="false"
+            android:buttonTint="?attr/colorPrimary"
+            android:drawableRight="@drawable/save_icon"
+            android:drawablePadding="10dp"
+            android:drawableTint="?colorPrimary"
+            android:text="Автоматически сохранять\nзапущенное занятие"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/settings_work_in_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
+            android:checked="false"
+            android:buttonTint="?attr/colorPrimary"
+            android:drawableRight="@drawable/process_icon"
+            android:drawablePadding="10dp"
+            android:drawableTint="?colorPrimary"
+            android:text="Работа в фоне"
+            android:textSize="18sp"/>
+
+        <CheckBox
+            android:id="@+id/settings_always_on_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
+            android:checked="false"
+            android:buttonTint="?attr/colorPrimary"
+            android:drawableRight="@drawable/dont_off_screen"
+            android:drawablePadding="10dp"
+            android:drawableTint="?colorPrimary"
+            android:text="Не гасить экран"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

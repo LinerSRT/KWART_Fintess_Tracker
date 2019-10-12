@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?backgroundColor"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/stop_workout"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/button_background_shape"
+        android:backgroundTint="#F00"
+        android:drawableLeft="@drawable/stop_icon"
+        android:drawableTint="#fff"
+        android:elevation="5dp"
+        android:padding="10dp"
+        android:text="Стоп"
+        android:textColor="#fff"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/pause_resume_workout"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:text="Продолжить"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:background="@drawable/button_background_shape"
+        android:backgroundTint="#00F"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/pause_icon"
+        android:drawableTint="#fff"
+        android:elevation="5dp"/>
+
+</LinearLayout>

@@ -1,0 +1,66 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@android:style/Theme.Holo.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="backgroundColor">@color/backgroundColorLight</item>
+        <item name="backgroundColorDark">@color/backgroundColorLightSecond</item>
+        <item name="textColor">@color/text_color</item>
+        <item name="colorPrimary">@color/accent_color</item>
+        <item name="textColorDark">@color/text_highlight</item>
+        <item name="colorPrimaryDark">@color/accent_color_dark</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+
+
+    <style name="OrangeDeepTheme" parent="@android:style/Theme.NoTitleBar" >
+        <item name="android:windowFullscreen">true</item>
+        <item name="backgroundColor">@color/backgroundColorLight</item>
+        <item name="backgroundColorDark">@color/backgroundColorLightSecond</item>
+        <item name="textColor">@color/text_color</item>
+        <item name="colorPrimary">@color/accent_color</item>
+        <item name="textColorDark">@color/text_highlight</item>
+        <item name="colorPrimaryDark">@color/accent_color_dark</item>
+    </style>
+
+    <style name="BlueDeepTheme" parent="@android:style/Theme.NoTitleBar" >
+        <item name="android:windowFullscreen">true</item>
+        <item name="backgroundColor">@color/backgroundColorLight</item>
+        <item name="backgroundColorDark">@color/backgroundColorLightSecond</item>
+        <item name="textColor">@color/text_color</item>
+        <item name="colorPrimary">@color/blue_accent</item>
+        <item name="textColorDark">@color/text_highlight</item>
+        <item name="colorPrimaryDark">@color/blue_accent_dark</item>
+    </style>
+
+    <style name="RedDeepTheme" parent="@android:style/Theme.NoTitleBar" >
+        <item name="android:windowFullscreen">true</item>
+        <item name="backgroundColor">@color/backgroundColorLight</item>
+        <item name="backgroundColorDark">@color/backgroundColorLightSecond</item>
+        <item name="textColor">@color/text_color</item>
+        <item name="colorPrimary">@color/red_accent_color</item>
+        <item name="textColorDark">@color/text_highlight</item>
+        <item name="colorPrimaryDark">@color/red_accent_color_dark</item>
+    </style>
+
+    <style name="GreenDeepTheme" parent="@android:style/Theme.NoTitleBar" >
+        <item name="android:windowFullscreen">true</item>
+        <item name="backgroundColor">@color/backgroundColorLight</item>
+        <item name="backgroundColorDark">@color/backgroundColorLightSecond</item>
+        <item name="textColor">@color/text_color</item>
+        <item name="colorPrimary">@color/green_accent_color</item>
+        <item name="textColorDark">@color/text_highlight</item>
+        <item name="colorPrimaryDark">@color/green_accent_color_dark</item>
+    </style>
+
+    <style name="DarkTheme" parent="@android:style/Theme.NoTitleBar" >
+        <item name="android:windowFullscreen">true</item>
+        <item name="backgroundColor">@color/backgroundColorDark</item>
+        <item name="backgroundColorDark">@color/backgroundColorDarkSecond</item>
+        <item name="textColor">@color/text_white</item>
+        <item name="colorPrimary">#838383</item>
+        <item name="textColorDark">@color/text_white</item>
+        <item name="colorPrimaryDark">#616161</item>
+    </style>
+</resources>

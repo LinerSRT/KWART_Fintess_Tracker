@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#eeeeee</color>
+    <color name="background_dark">#A83D00</color>
+    <color name="background_sdark">#B3C4C4</color>
+    <color name="text_color">#393d46</color>
+    <color name="text_highlight">#212832</color>
+    <color name="text_white">#FFF</color>
+    <color name="white">#FFFFFF</color>
+
+
+    <!-- Blue Theme -->
+    <color name="blue_accent">#2036F3</color>
+    <color name="blue_accent_dark">#192AB6</color>
+
+    <!-- Orange Theme -->
+    <color name="accent_color">#fd7014</color>
+    <color name="accent_color_dark">#C75810</color>
+
+    <!-- Red Theme -->
+    <color name="red_accent_color">#C00000</color>
+    <color name="red_accent_color_dark">#940000</color>
+
+    <!-- Green Theme -->
+    <color name="green_accent_color">#139400</color>
+    <color name="green_accent_color_dark">#0F6D01</color>
+
+    <!-- Dark Mode -->
+    <color name="backgroundColorDark">#000</color>
+    <color name="backgroundColorDarkSecond">#0E0E0E</color>
+    <color name="dark_accent">#838383</color>
+
+    <!-- Light Mode -->
+    <color name="backgroundColorLight">#eee</color>
+    <color name="backgroundColorLightSecond">#D1D1D1</color>
+
+
+</resources>
