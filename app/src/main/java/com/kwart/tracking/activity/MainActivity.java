@@ -75,9 +75,11 @@ public class MainActivity extends FragmentActivity {
         trainBtn = findViewById(R.id.trainBtn);
         settingsBtn = findViewById(R.id.settingsBtn);
         viewpagerDescription = findViewById(R.id.viewpager_description);
-        coloredBG = getResources().getDrawable(R.drawable.background_shape);
+        coloredBG = getDrawable(R.drawable.background_shape);
+        assert coloredBG != null;
         coloredBG.setTint(ColorUtil.getAttrColor(MainActivity.this,R.attr.colorPrimary));
-        grayBG = getResources().getDrawable(R.drawable.background_shape);
+        grayBG = getDrawable(R.drawable.background_shape);
+        assert grayBG != null;
         grayBG.setTint(Color.parseColor("#777777"));
         setUpViewPager();
         statBtn.setOnClickListener(new View.OnClickListener() {

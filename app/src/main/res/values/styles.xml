@@ -21,6 +21,14 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <style name="TextStyle">
+        <item name="android:textSize">@dimen/mdpi_textSecondarySize</item>
+        <item name="android:textColor">?textColor</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+
     <style name="OrangeDeepTheme" parent="@android:style/Theme.NoTitleBar" >
         <item name="android:windowFullscreen">true</item>
         <item name="backgroundColor">@color/backgroundColorLight</item>

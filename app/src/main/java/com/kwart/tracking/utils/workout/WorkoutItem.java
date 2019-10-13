@@ -2,8 +2,9 @@ package com.kwart.tracking.utils.workout;
 
 public class WorkoutItem {
     private double latitude, longtitude;
-    private int stepCount, stepPerSec, avgPulse, minPulse, maxPulse, workoutType;
+    private int stepCount, stepPerSec, avgPulse, minPulse, maxPulse, workoutType, worckoutTimeRun;
     private float distance, maxSpeed, avgSpeed, calories;
+    private String date;
 
     //GPS
     private boolean isFirstGPSLocation;
@@ -21,6 +22,8 @@ public class WorkoutItem {
         this.minPulse = 0;
         this.maxPulse = 0;
         this.maxPulse = 0;
+        this.worckoutTimeRun = 0;
+        this.date = "";
         this.isFirstGPSLocation = true;
     }
 
@@ -133,6 +136,21 @@ public class WorkoutItem {
         this.distance = distance + newD;
     }
 
+    public void setWorckoutTimeRun(int worckoutTimeRun) {
+        this.worckoutTimeRun = worckoutTimeRun;
+    }
+
+    public int getWorckoutTimeRun() {
+        return worckoutTimeRun;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
 
     public String getWorkoutStringType(){
         switch (getWorkoutType()){

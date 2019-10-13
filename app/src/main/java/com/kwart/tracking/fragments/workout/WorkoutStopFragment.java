@@ -31,9 +31,11 @@ public class WorkoutStopFragment extends Fragment {
         pauseBtn = view.findViewById(R.id.pause_resume_workout);
         stopBtn = view.findViewById(R.id.stop_workout);
 
-        greenBG = getResources().getDrawable(R.drawable.background_shape);
+        greenBG = Objects.requireNonNull(getContext()).getDrawable(R.drawable.background_shape);
+        assert greenBG != null;
         greenBG.setTint(Color.parseColor("#FF0000"));
-        redBG = getResources().getDrawable(R.drawable.background_shape);
+        redBG = getContext().getDrawable(R.drawable.background_shape);
+        assert redBG != null;
         redBG.setTint(Color.parseColor("#0000FF"));
         workoutManager = WorkoutInformationFragment.getWorkoutManager();
 

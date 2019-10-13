@@ -26,6 +26,7 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/statistic_total_workouts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="\?"
@@ -52,6 +53,7 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/statistic_total_workouts_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="\?"
@@ -78,6 +80,7 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/statistic_total_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="\?"
@@ -104,6 +107,7 @@
                 android:textSize="18sp"/>
 
             <TextView
+                android:id="@+id/statistic_total_calories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="\?"

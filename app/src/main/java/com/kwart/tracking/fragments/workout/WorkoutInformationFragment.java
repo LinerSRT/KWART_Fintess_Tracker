@@ -13,6 +13,7 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +21,25 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kwart.tracking.R;
+import com.kwart.tracking.fragments.StatisticFragment;
 import com.kwart.tracking.utils.Constants;
 import com.kwart.tracking.utils.PreferenceManager;
+import com.kwart.tracking.utils.workout.WorkoutFileManager;
 import com.kwart.tracking.utils.workout.WorkoutItem;
 import com.kwart.tracking.utils.workout.WorkoutListener;
 import com.kwart.tracking.utils.workout.WorkoutManager;
 import com.kwart.tracking.utils.workout.WorkoutMapManager;
+import com.kwart.tracking.utils.workout.WorkoutMapPath;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,6 +51,7 @@ public class WorkoutInformationFragment extends Fragment {
     private PreferenceManager preferenceManager;
     public static WorkoutManager workoutManager;
     private WorkoutMapManager workoutMapManager;
+    private WorkoutFileManager workoutFileManager;
 
     private TextView currentTimeView, maxSpeedView, distanceView, avgSpeedView, caloriesView, heartrateView, stepsView;
     private Chronometer elapsedTimeView;
@@ -48,6 +59,12 @@ public class WorkoutInformationFragment extends Fragment {
     private boolean elapsedViewVisible = true;
     private Handler mHandler = new Handler();
     private Timer mTimer = null;
+
+
+    private List<WorkoutMapPath> workoutMapPaths;
+    private List<WorkoutItem> workoutItemList;
+
+    private String workoutDateTime;
 
 
     @Override
@@ -78,6 +95,7 @@ public class WorkoutInformationFragment extends Fragment {
         currentTimeView.setText(currentDateandTime);
         getContext().registerReceiver(timeChangedReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
         workoutMapManager = WorkoutMapFragment.getWorkoutMapManager();
+        workoutFileManager = new WorkoutFileManager(getContext());
         workoutManager = new WorkoutManager(getContext(), new WorkoutListener() {
             @Override
             public void dataChanged(WorkoutItem workoutItem) {
@@ -87,18 +105,42 @@ public class WorkoutInformationFragment extends Fragment {
                 stepsView.setText(String.valueOf(workoutItem.getStepCount()));
                 avgSpeedView.setText(String.valueOf(workoutItem.getAvgSpeed()));
                 maxSpeedView.setText(String.valueOf(workoutItem.getMaxSpeed()));
+
+                WorkoutItem toData = new WorkoutItem();
+                toData.setWorkoutType(workoutItem.getWorkoutType());
+                toData.setAvgPulse(workoutItem.getAvgPulse());
+                toData.setAvgSpeed(workoutItem.getAvgSpeed());
+                toData.setCalories(workoutItem.getCalories());
+                toData.setDistance(workoutItem.getDistance());
+                toData.setLatitude(workoutItem.getLatitude());
+                toData.setLongtitude(workoutItem.getLongtitude());
+                toData.setStepCount(workoutItem.getStepCount());
+                toData.setStepPerSec(workoutItem.getStepPerSec());
+                toData.setMinPulse(workoutItem.getMinPulse());
+                toData.setMaxPulse(workoutItem.getMaxPulse());
+                toData.setAvgPulse(workoutItem.getAvgPulse());
+                toData.setMaxSpeed(workoutItem.getMaxSpeed());
+                toData.setWorckoutTimeRun(workoutItem.getWorckoutTimeRun());
+                workoutItemList.add(toData);
             }
 
             @Override
             public void onStart() {
                 elapsedTimeView.start();
+                workoutMapPaths = new ArrayList<>();
+                workoutItemList = new ArrayList<>();
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat time_format = new SimpleDateFormat("HH_mm_dd_MM_yyyy");
+                workoutDateTime = time_format.format(new Date());
             }
 
             @Override
-            public void onStop() {
+            public void onStop(WorkoutItem workoutItem) {
                 elapsedTimeView.setBase(SystemClock.elapsedRealtime());
                 timeWhenStopped = 0;
+                workoutFileManager.saveWorkout(workoutItemList, workoutDateTime);
                 elapsedTimeView.stop();
+                Intent intent = new Intent("NEED_UPDATE_RECYCLER");
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
             }
 
             @Override
@@ -134,7 +176,9 @@ public class WorkoutInformationFragment extends Fragment {
                     if(preferenceManager.getBoolean(Constants.SETTINGS_REALTIME_MAP_KEY, false)){
                         if(workoutMapManager != null){
                             if(workoutMapManager.isMapInitialised()) {
-                                workoutMapManager.drawPath(lat, lon, Color.GREEN, 4);
+                                workoutMapPaths.add(new WorkoutMapPath(lat, lon));
+                                workoutFileManager.addMapPath(workoutMapPaths, workoutDateTime);
+                                workoutMapManager.drawPath(workoutMapPaths.get(workoutMapPaths.size()-1), Color.GREEN, 4);
                             }
                         }
                     }
@@ -157,7 +201,7 @@ public class WorkoutInformationFragment extends Fragment {
 
             @Override
             public void debug(String data) {
-                Log.d(Constants.APP_TAG, data);
+
             }
         });
         workoutManager.setGPSUsing(preferenceManager.getBoolean(Constants.SETTINGS_USE_GPS_KEY, false), LocationManager.GPS_PROVIDER);

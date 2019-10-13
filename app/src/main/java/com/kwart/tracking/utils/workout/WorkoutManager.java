@@ -73,6 +73,9 @@ public class WorkoutManager implements LocationListener, SensorEventListener, Gp
     private float userStepSize;
     private int userWeight;
 
+    //Time
+    private int workoutTimeRun = 0; // in sec
+
 
     public WorkoutManager(Context context, final WorkoutListener workoutListener){
         this.context = context;
@@ -92,6 +95,8 @@ public class WorkoutManager implements LocationListener, SensorEventListener, Gp
                     }
                     stepPerSec = 0;
                 }
+                workoutTimeRun ++;
+                workoutItem.setWorckoutTimeRun(workoutTimeRun);
                 notifyListener();
                 if (!isMainThreadStopped) {
                     mainThread.postDelayed(this, 1000);
@@ -141,6 +146,7 @@ public class WorkoutManager implements LocationListener, SensorEventListener, Gp
                 pulseMax = 0;
                 stepCount = -1;
                 stepPerSec = -1;
+                workoutTimeRun = 0;
                 isManagerRunning = true;
                 isManagerIsPaused = false;
                 isMainThreadStopped = false;
@@ -181,7 +187,7 @@ public class WorkoutManager implements LocationListener, SensorEventListener, Gp
         //        "Sensor recognition paused: "+isSensorRecognitionPaused);
 
         preferenceManager.saveBoolean(Constants.IS_WORKOUT_RUNNING_KEY, false);
-        workoutListener.onStop();
+        workoutListener.onStop(workoutItem);
 
     }
 
@@ -240,6 +246,8 @@ public class WorkoutManager implements LocationListener, SensorEventListener, Gp
         calculateSpeedByGPS(location.getSpeed());
         currentLat = location.getLatitude();
         currentLon = location.getLongitude();
+        workoutItem.setLatitude(currentLat);
+        workoutItem.setLongtitude(currentLon);
         if (workoutItem.isFirstGPSLocation()){
             lastLat = currentLat;
             lastLon = currentLon;

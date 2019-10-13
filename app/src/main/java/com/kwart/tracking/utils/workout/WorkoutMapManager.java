@@ -44,13 +44,13 @@ public class WorkoutMapManager implements OnMapReadyCallback {
         googleMap.setMapType(type);
     }
 
-    public void drawPath(double lat, double lon, int color, int width){
+    public void drawPath(WorkoutMapPath workoutMapPath, int color, int width){
         polylineOptions.color(color);
         polylineOptions.width(width);
         polylineOptions.visible(true);
-        polylineOptions.add(new LatLng(lat, lon));
+        polylineOptions.add(new LatLng(workoutMapPath.getLatitude(), workoutMapPath.getLongitude()));
         googleMap.addPolyline(polylineOptions);
-        moveCamera(lat, lon, 16);
+        moveCamera(workoutMapPath.getLatitude(), workoutMapPath.getLongitude(), 16);
     }
 
     public void moveCamera(double lat, double lon, int zoomLevel){

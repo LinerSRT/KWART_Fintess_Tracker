@@ -45,7 +45,7 @@ public class TrainFragment extends Fragment {
         fitnessRecyclerView.setFlingVelocity(1);
 
 
-        startWorkout = (Button) view.findViewById(R.id.start_workout);
+        startWorkout = view.findViewById(R.id.start_workout);
         startWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
