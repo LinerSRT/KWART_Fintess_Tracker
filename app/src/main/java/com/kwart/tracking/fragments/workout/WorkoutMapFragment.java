@@ -1,5 +1,6 @@
 package com.kwart.tracking.fragments.workout;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,27 +20,28 @@ public class WorkoutMapFragment extends Fragment {
     public static WorkoutMapManager workoutMapManager;
 
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.workout_map_fragment, container, false);
-
-        SupportMapFragment map = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         workoutMapManager = new WorkoutMapManager(getContext(), new WorkoutMapInterface() {
             @Override
             public void onMapLoaded(GoogleMap googleMap) {
                 workoutMapManager.setMapType(4);
             }
         });
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.workout_map_fragment, container, false);
+
+        SupportMapFragment map = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         workoutMapManager.initMapManager(map);
         return view;
     }
 
-    public WorkoutMapManager getWorkoutMapManager(){
-        if(workoutMapManager != null) {
-            return workoutMapManager;
-        } else {
-            return null;
-        }
+    public static WorkoutMapManager getWorkoutMapManager(){
+        return workoutMapManager;
     }
 }

@@ -1,7 +1,10 @@
 package com.kwart.tracking.utils.workout;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -9,6 +12,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.kwart.tracking.utils.Constants;
 
 public class WorkoutMapManager implements OnMapReadyCallback {
 
@@ -46,11 +50,14 @@ public class WorkoutMapManager implements OnMapReadyCallback {
         polylineOptions.visible(true);
         polylineOptions.add(new LatLng(lat, lon));
         googleMap.addPolyline(polylineOptions);
+        moveCamera(lat, lon, 16);
     }
 
     public void moveCamera(double lat, double lon, int zoomLevel){
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(lat, lon)));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(zoomLevel));
+        if(mapInitialised) {
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 16);
+            googleMap.animateCamera(cameraUpdate);
+        }
     }
 
     public boolean isMapInitialised(){

@@ -5,6 +5,9 @@ public class WorkoutItem {
     private int stepCount, stepPerSec, avgPulse, minPulse, maxPulse, workoutType;
     private float distance, maxSpeed, avgSpeed, calories;
 
+    //GPS
+    private boolean isFirstGPSLocation;
+
     public WorkoutItem(){
         this.workoutType = 0;
         this.avgPulse = 0;
@@ -18,6 +21,7 @@ public class WorkoutItem {
         this.minPulse = 0;
         this.maxPulse = 0;
         this.maxPulse = 0;
+        this.isFirstGPSLocation = true;
     }
 
     public void setWorkoutType(int workoutType) {
@@ -116,6 +120,19 @@ public class WorkoutItem {
     public int getStepPerSec() {
         return stepPerSec;
     }
+
+    public boolean isFirstGPSLocation() {
+        return isFirstGPSLocation;
+    }
+
+    public void setFirstGPSLocation(boolean firstGPSLocation) {
+        isFirstGPSLocation = firstGPSLocation;
+    }
+
+    public void addDistance(float newD){
+        this.distance = distance + newD;
+    }
+
 
     public String getWorkoutStringType(){
         switch (getWorkoutType()){

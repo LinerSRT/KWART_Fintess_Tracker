@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +50,16 @@ public class WorkoutInformationFragment extends Fragment {
     private Timer mTimer = null;
 
 
+    @Override
+    public void onDestroy() {
+        try {
+            getContext().unregisterReceiver(timeChangedReceiver);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        super.onDestroy();
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +77,7 @@ public class WorkoutInformationFragment extends Fragment {
         String currentDateandTime = time_format.format(new Date());
         currentTimeView.setText(currentDateandTime);
         getContext().registerReceiver(timeChangedReceiver, new IntentFilter(Intent.ACTION_TIME_TICK));
-        workoutMapManager = WorkoutMapFragment.workoutMapManager;
+        workoutMapManager = WorkoutMapFragment.getWorkoutMapManager();
         workoutManager = new WorkoutManager(getContext(), new WorkoutListener() {
             @Override
             public void dataChanged(WorkoutItem workoutItem) {
@@ -120,7 +131,13 @@ public class WorkoutInformationFragment extends Fragment {
 
             @Override
             public void onLatLonChanged(double lat, double lon) {
-                    workoutMapManager.moveCamera(lat, lon, 10);
+                    if(preferenceManager.getBoolean(Constants.SETTINGS_REALTIME_MAP_KEY, false)){
+                        if(workoutMapManager != null){
+                            if(workoutMapManager.isMapInitialised()) {
+                                workoutMapManager.drawPath(lat, lon, Color.GREEN, 4);
+                            }
+                        }
+                    }
             }
 
             @Override
@@ -147,7 +164,6 @@ public class WorkoutInformationFragment extends Fragment {
         workoutManager.startManager(Objects.requireNonNull(getActivity()).getIntent().getIntExtra("mode", 0));
         return view;
     }
-
 
     public static WorkoutManager getWorkoutManager(){
         return workoutManager;
