@@ -4,6 +4,12 @@
     android:background="?backgroundColor"
     android:gravity="center">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="match_parent"
@@ -77,7 +83,15 @@
             android:text="Не гасить экран"
             android:textSize="18sp"/>
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/delete_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ButtonStyle"
+            android:layout_marginTop="10dp"
+            android:text="Удалить историю тренировок"/>
 
+    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

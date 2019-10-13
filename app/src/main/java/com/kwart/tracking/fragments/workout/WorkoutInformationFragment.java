@@ -65,6 +65,7 @@ public class WorkoutInformationFragment extends Fragment {
     private List<WorkoutItem> workoutItemList;
 
     private String workoutDateTime;
+    private String workoutDataDateTime;
 
 
     @Override
@@ -121,6 +122,7 @@ public class WorkoutInformationFragment extends Fragment {
                 toData.setAvgPulse(workoutItem.getAvgPulse());
                 toData.setMaxSpeed(workoutItem.getMaxSpeed());
                 toData.setWorckoutTimeRun(workoutItem.getWorckoutTimeRun());
+                toData.setDate(workoutDataDateTime);
                 workoutItemList.add(toData);
             }
 
@@ -131,6 +133,8 @@ public class WorkoutInformationFragment extends Fragment {
                 workoutItemList = new ArrayList<>();
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat time_format = new SimpleDateFormat("HH_mm_dd_MM_yyyy");
                 workoutDateTime = time_format.format(new Date());
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("HH:mm\ndd.MM.yyyy");
+                workoutDataDateTime = format.format(new Date());
             }
 
             @Override

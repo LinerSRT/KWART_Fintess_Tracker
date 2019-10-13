@@ -152,6 +152,7 @@ public class WorkoutFileManager {
         File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+DATA_FOLDER+File.separator+WORKOUT_FILEDIR+File.separator);
         File[] list = path.listFiles();
         int count = 0;
+        if(list != null)
         for(File item: list){
             count++;
         }
