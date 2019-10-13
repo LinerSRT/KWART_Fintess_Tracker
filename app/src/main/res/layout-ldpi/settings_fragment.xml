@@ -11,11 +11,11 @@
 
 
     <LinearLayout
-        android:layout_width="300dp"
+        android:layout_width="240dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        android:gravity="left|center_vertical">
+        android:layout_marginTop="30dp"
+        android:gravity="center_vertical">
 
 
         <CheckBox
@@ -25,10 +25,10 @@
             android:textColor="?attr/textColor"
             android:buttonTint="?attr/colorPrimary"
             android:drawableRight="@drawable/gps_icon"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:drawableTint="?colorPrimary"
             android:text="Использовать GPS"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/ldpi_textSecondarySize"/>
 
         <CheckBox
             android:id="@+id/settings_show_realtime_map"
@@ -37,10 +37,10 @@
             android:textColor="?attr/textColor"
             android:buttonTint="?attr/colorPrimary"
             android:drawableRight="@drawable/map_icon"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:drawableTint="?colorPrimary"
             android:text="Показывать карту \nв реальном времени"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/ldpi_textSecondarySize"/>
 
         <CheckBox
             android:id="@+id/settings_autosave"
@@ -49,22 +49,22 @@
             android:textColor="?attr/textColor"
             android:buttonTint="?attr/colorPrimary"
             android:drawableRight="@drawable/save_icon"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:drawableTint="?colorPrimary"
             android:text="Автоматически сохранять\nзапущенное занятие"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/ldpi_textSecondarySize"/>
 
         <CheckBox
             android:id="@+id/settings_work_in_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
             android:buttonTint="?attr/colorPrimary"
             android:drawableRight="@drawable/process_icon"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:drawableTint="?colorPrimary"
             android:text="Работа в фоне"
-            android:textColor="?attr/textColor"
-            android:textSize="18sp" />
+            android:textSize="@dimen/ldpi_textSecondarySize"/>
 
         <CheckBox
             android:id="@+id/settings_always_on_screen"
@@ -73,18 +73,19 @@
             android:textColor="?attr/textColor"
             android:buttonTint="?attr/colorPrimary"
             android:drawableRight="@drawable/dont_off_screen"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:drawableTint="?colorPrimary"
             android:text="Не гасить экран"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/ldpi_textSecondarySize"/>
 
         <Button
             android:id="@+id/delete_history"
+            style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/ButtonStyle"
-            android:layout_marginTop="10dp"
-            android:text="Удалить историю тренировок"/>
+            android:layout_marginTop="5dp"
+            android:text="Удалить историю тренировок"
+            android:textSize="@dimen/ldpi_textSecondarySize" />
 
     </LinearLayout>
     </ScrollView>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_shape"
+    android:backgroundTint="?backgroundColor">
+
+
+    <ImageView
+        android:id="@+id/train_icon_type"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:src="@drawable/bycicle"
+        android:tint="?colorPrimary"/>
+
+    <TextView
+        android:id="@+id/train_text_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Езда на\nвелосипеде"
+        android:gravity="center"
+        android:textStyle="normal"
+        android:textSize="@dimen/ldpi_textSecondarySize"
+        android:textColor="?textColor"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"/>
+
+</LinearLayout>

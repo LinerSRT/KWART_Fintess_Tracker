@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:attrs="http://schemas.android.com/tools"
+    android:gravity="bottom|center_horizontal"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    android:background="?backgroundColor"
+    android:elevation="5dp">
+
+    <ImageButton
+        android:id="@+id/statBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/background_shape"
+        android:src="@drawable/ic_show_chart_black_24dp"
+        android:tint="#fff"
+        android:scaleType="fitCenter"
+        android:padding="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="40dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/viewpager_description"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:text="Тренировка"
+                android:textSize="@dimen/ldpi_textSecondarySize"
+                android:textStyle="bold"
+                android:textColor="?textColor"
+                android:gravity="center"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/historyBtn"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/background_shape"
+                    android:src="@drawable/ic_history_black_24dp"
+                    android:tint="#fff"
+                    android:scaleType="fitCenter"
+                    android:padding="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageButton
+                    android:id="@+id/trainBtn"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/background_shape"
+                    android:src="@drawable/ic_train"
+                    android:tint="#fff"
+                    android:scaleType="fitCenter"
+                    android:padding="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/settingsBtn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/background_shape"
+        android:src="@drawable/ic_settings_black_24dp"
+        android:tint="#fff"
+        android:scaleType="fitCenter"
+        android:padding="5dp"
+        android:layout_marginBottom="40dp"/>
+
+</LinearLayout>

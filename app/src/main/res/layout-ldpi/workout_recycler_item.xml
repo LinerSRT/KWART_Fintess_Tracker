@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="5dp"
+    android:elevation="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_shape_up"
+        android:backgroundTint="?colorPrimary"
+        android:padding="10sp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:text="Тип:"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/workout_recycler_stringTypeWorkout"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:text="Велопоездка"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/workout_recycler_date"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:textColor="#fff"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:layout_marginStart="30dp"
+            android:text="12:55 \n12.12.2025"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?backgroundColor"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/distance_icon"
+            android:tint="?colorPrimary"/>
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:layout_height="match_parent"
+            android:text="Пройденное растояние"/>
+
+        <TextView
+            android:id="@+id/workout_recycler_distance"
+            style="@style/TextStyle"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:textColor="?colorPrimary"
+            android:text="2"
+            android:background="?backgroundColor"/>
+
+        <TextView
+            style="@style/TextStyle"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:text="км"
+            android:background="?backgroundColor"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?backgroundColor"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/steps_icon"
+            android:tint="?colorPrimary"/>
+
+        <TextView
+            style="@style/TextStyle"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Совершено шагов"/>
+
+        <TextView
+            android:id="@+id/workout_recycler_steps"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:textColor="?colorPrimary"
+            android:text="13213"
+            android:background="?backgroundColor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?backgroundColor"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/calories"
+            android:tint="?colorPrimary"/>
+
+        <TextView
+            style="@style/TextStyle"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Сожжено калорий"/>
+
+        <TextView
+            android:id="@+id/workout_recycler_calories"
+            style="@style/TextStyle"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:textColor="?colorPrimary"
+            android:text="113"
+            android:background="?backgroundColor"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="?backgroundColor"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/heart_icon"
+            android:tint="?colorPrimary"/>
+
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:text="Пульс (мин | макс)"/>
+        <TextView
+            android:id="@+id/workout_recycler_minPulse"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:textColor="?colorPrimary"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:text="73"
+            android:background="?backgroundColor"/>
+        <TextView
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:layout_marginStart="5dp"
+            android:text="|"/>
+        <TextView
+            android:id="@+id/workout_recycler_maxPulse"
+            style="@style/TextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            android:textStyle="bold"
+            android:textColor="?colorPrimary"
+            android:text="113"
+            android:background="?backgroundColor"/>
+    </LinearLayout>
+
+    <TextView
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="График скорости (сред.)"
+        android:background="?backgroundColor"
+        android:textSize="@dimen/ldpi_textSecondarySize"
+        android:paddingTop="5dp"/>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/workout_recycler_averageSpeedChart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_above="@+id/workout_recycler_seekbar"
+        android:background="?backgroundColor"
+        android:padding="5dp"/>
+
+
+    <TextView
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="График пульса (сред.)"
+        android:textSize="@dimen/ldpi_textSecondarySize"
+        android:background="?backgroundColor"
+        android:paddingTop="5dp"/>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/workout_recycler_averageHeartRateChart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_above="@+id/workout_recycler_seekbar"
+        android:background="?backgroundColor"
+        android:padding="5dp"/>
+
+    
+</LinearLayout>

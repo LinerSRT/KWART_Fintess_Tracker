@@ -2,4 +2,6 @@
 <resources>
     <dimen name="mdpi_textPrimarySize">22sp</dimen>
     <dimen name="mdpi_textSecondarySize">18sp</dimen>
-</resources>
+    <dimen name="ldpi_textPrimarySize">12sp</dimen>
+    <dimen name="ldpi_textSecondarySize">9sp</dimen>
+    </resources>
