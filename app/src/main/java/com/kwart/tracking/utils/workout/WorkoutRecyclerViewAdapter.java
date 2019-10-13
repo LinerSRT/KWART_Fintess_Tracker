@@ -81,7 +81,7 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
 
         heartChartManager = new ChartValueManager(context, pulseChart);
         heartChartManager.initChart(maxPulse+20, 0, timeValues, ColorUtil.getAttrColor(activity, R.attr.backgroundColor), ColorUtil.getAttrColor(activity, R.attr.textColor));
-        heartChartManager.setValues(speedValuesList, ColorUtil.getAttrColor(activity, R.attr.colorPrimaryDark));
+        heartChartManager.setValues(pulseValuesList, ColorUtil.getAttrColor(activity, R.attr.colorPrimaryDark));
 
     }
 
@@ -103,7 +103,6 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView worckoutIcon;
         TextView workoutType, workoutDate, distanceView, stepsView, caloriesView, minPulseView, maxPulseView;
 
         ViewHolder(final View view) {
@@ -126,13 +125,13 @@ public class WorkoutRecyclerViewAdapter extends RecyclerView.Adapter<WorkoutRecy
         long minutes = (totalTimeInSec % 3600) / 60;
         StringBuilder stringBuilder = new StringBuilder();
         if(hours < 10){
-            stringBuilder.append("0"+hours);
+            stringBuilder.append("0").append(hours);
         } else {
             stringBuilder.append(hours);
         }
         stringBuilder.append(":");
         if(minutes < 10){
-            stringBuilder.append("0"+minutes);
+            stringBuilder.append("0").append(minutes);
         } else {
             stringBuilder.append(minutes);
         }
