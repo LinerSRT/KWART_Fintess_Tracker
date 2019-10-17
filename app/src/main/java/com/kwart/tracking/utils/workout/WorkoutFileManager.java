@@ -1,7 +1,9 @@
 package com.kwart.tracking.utils.workout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -169,6 +171,21 @@ public class WorkoutFileManager {
         return workoutList;
     }
 
-
+    public void deleteAllWorkouts(){
+        File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+DATA_FOLDER+File.separator+WORKOUT_FILEDIR+File.separator);
+        File path2 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+DATA_FOLDER+File.separator+MAP_FILEDIR+File.separator);
+        if(path.list() != null) {
+            for (String file : path.list()) {
+                new File(path, file).delete();
+            }
+        }
+        if(path2.list() != null) {
+            for (String file : path2.list()) {
+                new File(path, file).delete();
+            }
+        }
+        Intent intent = new Intent("NEED_UPDATE_RECYCLER");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 
 }

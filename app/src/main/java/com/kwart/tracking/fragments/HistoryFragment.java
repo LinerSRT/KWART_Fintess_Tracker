@@ -53,13 +53,11 @@ public class HistoryFragment extends Fragment {
                 workoutList.add(workoutItemList);
             }
         }
-        if(workoutList.size() != 0){
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-            workoutRecycler.setLayoutManager(layoutManager);
-            layoutManager.setSmoothScrollbarEnabled(true);
-            WorkoutRecyclerViewAdapter workoutRecyclerViewAdapter = new WorkoutRecyclerViewAdapter(workoutList, getContext(), getActivity());
-            workoutRecycler.setAdapter(workoutRecyclerViewAdapter);
-        }
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        workoutRecycler.setLayoutManager(layoutManager);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        WorkoutRecyclerViewAdapter workoutRecyclerViewAdapter = new WorkoutRecyclerViewAdapter(workoutList, getContext(), getActivity());
+        workoutRecycler.setAdapter(workoutRecyclerViewAdapter);
     }
 
     private BroadcastReceiver recyclerUpdateReceiver = new BroadcastReceiver() {

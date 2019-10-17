@@ -7,16 +7,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.kwart.tracking.R;
 import com.kwart.tracking.utils.Constants;
 import com.kwart.tracking.utils.PreferenceManager;
+import com.kwart.tracking.utils.workout.WorkoutFileManager;
 
 
 public class SettingsFragment extends Fragment {
     private PreferenceManager preferenceManager;
+    private WorkoutFileManager workoutFileManager;
     private CheckBox useGPS, showRealTimeMap, autoSave, backgroundWork, alwaysOn;
+    private Button deleteWorkouts;
 
     @Nullable
     @Override
@@ -27,7 +31,9 @@ public class SettingsFragment extends Fragment {
         autoSave = view.findViewById(R.id.settings_autosave);
         backgroundWork = view.findViewById(R.id.settings_work_in_background);
         alwaysOn = view.findViewById(R.id.settings_always_on_screen);
+        deleteWorkouts = view.findViewById(R.id.delete_history);
         preferenceManager = PreferenceManager.getInstance(getContext());
+        workoutFileManager = new WorkoutFileManager(getContext());
         initValues();
         useGPS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +68,12 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view) {
                 preferenceManager.saveBoolean(Constants.SETTINGS_ALWAYS_ON_KEY, alwaysOn.isChecked());
                 initValues();
+            }
+        });
+        deleteWorkouts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                workoutFileManager.deleteAllWorkouts();
             }
         });
         return view;
