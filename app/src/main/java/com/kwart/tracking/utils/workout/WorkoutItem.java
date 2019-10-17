@@ -4,7 +4,7 @@ public class WorkoutItem {
     private double latitude, longtitude;
     private int stepCount, stepPerSec, avgPulse, minPulse, maxPulse, workoutType, worckoutTimeRun;
     private float distance, maxSpeed, avgSpeed, calories;
-    private String date;
+    private String date, filename;
 
     //GPS
     private boolean isFirstGPSLocation;
@@ -24,7 +24,16 @@ public class WorkoutItem {
         this.maxPulse = 0;
         this.worckoutTimeRun = 0;
         this.date = "";
+        this.filename = "";
         this.isFirstGPSLocation = true;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public void setWorkoutType(int workoutType) {

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginBottom="5dp"
+    android:layout_marginTop="10dp"
     android:elevation="5dp">
 
     <LinearLayout
@@ -46,6 +47,14 @@
             android:textStyle="bold"
             android:layout_marginStart="30dp"
             android:text="12:55 \n12.12.2025"/>
+
+        <ImageView
+            android:id="@+id/workout_recycler_deleteBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/detele_icon"
+            android:layout_marginStart="20dp"
+            android:tint="#fff"/>
     </LinearLayout>
 
     <LinearLayout
@@ -214,7 +223,21 @@
             android:text="113"
             android:background="?backgroundColor"/>
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?backgroundColor"
+        android:gravity="center">
+        <Button
+            android:id="@+id/workout_recycler_showMapBtn"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            style="@style/ButtonStyle"
+            android:text="Посмотреть карту"
+            android:visibility="gone"
+            android:textSize="@dimen/ldpi_textSecondarySize"
+            />
+    </LinearLayout>
     <TextView
         style="@style/TextStyle"
         android:layout_width="match_parent"
@@ -223,6 +246,15 @@
         android:background="?backgroundColor"
         android:textSize="@dimen/ldpi_textSecondarySize"
         android:paddingTop="5dp"/>
+
+    <TextView
+        android:id="@+id/workout_recycler_noDataSpeedChart"
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Данных нет"
+        android:textSize="@dimen/ldpi_textSecondarySize"
+        android:background="?backgroundColorDark"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/workout_recycler_averageSpeedChart"
@@ -241,6 +273,15 @@
         android:textSize="@dimen/ldpi_textSecondarySize"
         android:background="?backgroundColor"
         android:paddingTop="5dp"/>
+
+    <TextView
+        android:id="@+id/workout_recycler_noDataPulseChart"
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Данных нет"
+        android:textSize="@dimen/ldpi_textSecondarySize"
+        android:background="?backgroundColorDark"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/workout_recycler_averageHeartRateChart"

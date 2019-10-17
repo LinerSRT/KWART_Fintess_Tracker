@@ -141,6 +141,7 @@ public class WorkoutInformationFragment extends Fragment {
             public void onStop(WorkoutItem workoutItem) {
                 elapsedTimeView.setBase(SystemClock.elapsedRealtime());
                 timeWhenStopped = 0;
+                workoutItemList.get(workoutItemList.size()-1).setFilename(workoutDateTime);
                 workoutFileManager.saveWorkout(workoutItemList, workoutDateTime);
                 elapsedTimeView.stop();
                 Intent intent = new Intent("NEED_UPDATE_RECYCLER");

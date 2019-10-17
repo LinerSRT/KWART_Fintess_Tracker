@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.kwart.tracking.utils.Constants;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -186,6 +187,32 @@ public class WorkoutFileManager {
         }
         Intent intent = new Intent("NEED_UPDATE_RECYCLER");
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public void deleteWorkoutByDate(String date){
+        Log.d(Constants.APP_TAG, "Deleting: "+date);
+        File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+DATA_FOLDER+File.separator+WORKOUT_FILEDIR+File.separator);
+        try {
+            new File(path, date).delete();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        if(haveMapPath(date)){
+            File path2 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+DATA_FOLDER+File.separator+MAP_FILEDIR+File.separator);
+            try {
+                new File(path2, date).delete();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        Intent intent = new Intent("NEED_UPDATE_RECYCLER");
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public boolean haveMapPath(String date){
+        File path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator+DATA_FOLDER+File.separator+MAP_FILEDIR+File.separator);
+        File file = new File(path, date);
+        return file.exists();
     }
 
 }

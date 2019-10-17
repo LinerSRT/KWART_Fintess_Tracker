@@ -35,7 +35,6 @@ public class WorkoutMapFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.workout_map_fragment, container, false);
-
         SupportMapFragment map = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         workoutMapManager.initMapManager(map);
         return view;

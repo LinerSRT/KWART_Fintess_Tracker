@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginBottom="10dp"
+    android:layout_marginTop="20dp"
     android:elevation="5dp">
 
     <LinearLayout
@@ -39,11 +40,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#fff"
-            android:padding="10dp"
             android:textStyle="bold"
             android:layout_marginStart="30dp"
             android:text="12:55 \n12.12.2025"
             android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/workout_recycler_deleteBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/detele_icon"
+            android:layout_marginStart="20dp"
+            android:tint="#fff"/>
     </LinearLayout>
 
     <LinearLayout
@@ -202,6 +210,20 @@
             android:background="?backgroundColor"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?backgroundColor"
+        android:gravity="center">
+        <Button
+            android:id="@+id/workout_recycler_showMapBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            style="@style/ButtonStyle"
+            android:text="Посмотреть карту"
+            android:visibility="gone"
+            />
+    </LinearLayout>
     <TextView
         style="@style/TextStyle"
         android:layout_width="match_parent"
@@ -209,6 +231,14 @@
         android:text="График скорости (сред.)"
         android:background="?backgroundColor"
         android:paddingTop="10dp"/>
+
+    <TextView
+        android:id="@+id/workout_recycler_noDataSpeedChart"
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Данных нет"
+        android:background="?backgroundColorDark"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/workout_recycler_averageSpeedChart"
@@ -226,6 +256,14 @@
         android:text="График пульса (сред.)"
         android:background="?backgroundColor"
         android:paddingTop="10dp"/>
+
+    <TextView
+        android:id="@+id/workout_recycler_noDataPulseChart"
+        style="@style/TextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Данных нет"
+        android:background="?backgroundColorDark"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/workout_recycler_averageHeartRateChart"
